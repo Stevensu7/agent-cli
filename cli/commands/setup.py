@@ -135,7 +135,7 @@ def setup_bootstrap():
 
 @setup_app.command("claim-usdyp")
 def setup_claim_usdyp():
-    """Claim testnet USDyP tokens (required for YEX markets)."""
+    """Claim testnet USDyP tokens (required for tradexyz markets)."""
     import json
     import urllib.request
 
@@ -160,7 +160,7 @@ def setup_claim_usdyp():
 
     typer.echo(f"Claiming USDyP for {address} ...")
 
-    url = "https://api-temp.nunchi.trade/api/v1/yex/usdyp-claim"
+    url = "https://api-temp.nunchi.trade/api/v1/tradexyz/usdyp-claim"
     payload = json.dumps({"userAddress": address}).encode()
     req = urllib.request.Request(
         url,

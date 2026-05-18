@@ -1,5 +1,5 @@
 #!/bin/bash
-# Launch protected MM on YEX testnet with markout tracking.
+# Launch protected MM on tradexyz testnet with markout tracking.
 #
 # Usage:
 #   ./scripts/run_protected_mm.sh us3m    # Run US3M MM
@@ -32,7 +32,7 @@ fi
 
 launch_market() {
     local market=$1
-    local config="configs/yex_${market}_protected.yaml"
+    local config="configs/tradexyz_${market}_protected.yaml"
     local instrument
 
     case $market in
@@ -113,7 +113,7 @@ case "${1:-both}" in
 
         # Show markout stats
         for market in us3m vxx; do
-            markout="data/yex-${market}/markouts.jsonl"
+            markout="data/tradexyz-${market}/markouts.jsonl"
             if [ -f "$markout" ]; then
                 count=$(wc -l < "$markout")
                 echo ""
@@ -125,13 +125,13 @@ case "${1:-both}" in
         echo "=== US3M Markout Analysis ==="
         PYTHONPATH="${HOME}/anomaly-protection" \
         "$VENV_PYTHON" "${HOME}/anomaly-protection/analyze_markouts.py" \
-            "data/yex-us3m/markouts.jsonl" 2>/dev/null || echo "No US3M data yet"
+            "data/tradexyz-us3m/markouts.jsonl" 2>/dev/null || echo "No US3M data yet"
 
         echo ""
         echo "=== VXX Markout Analysis ==="
         PYTHONPATH="${HOME}/anomaly-protection" \
         "$VENV_PYTHON" "${HOME}/anomaly-protection/analyze_markouts.py" \
-            "data/yex-vxx/markouts.jsonl" 2>/dev/null || echo "No VXX data yet"
+            "data/tradexyz-vxx/markouts.jsonl" 2>/dev/null || echo "No VXX data yet"
         ;;
     *)
         echo "Usage: $0 {us3m|vxx|both|stop|status|analyze}"

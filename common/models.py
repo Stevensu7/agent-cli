@@ -13,8 +13,8 @@ DEFAULT_SUFFIX = "-PERP"
 
 # HIP-3 DEX definitions
 HIP3_DEXS: Dict[str, Dict[str, Any]] = {
-    "yex": {
-        "coin_prefix": "yex:",
+    "tradexyz": {
+        "coin_prefix": "tradexyz:",
         "instrument_suffix": "-USDYP",
         "assets": frozenset({"VXX", "US3M", "BTCSWP"}),
     },

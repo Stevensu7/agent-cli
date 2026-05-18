@@ -8,12 +8,12 @@ description: >-
   Use when protecting an open position, setting trailing stops, or automating profit-locked exits.
 license: MIT
 compatibility: >-
-  Requires python3 and yex-trader (agent-cli) installed.
+  Requires python3 and tradexyz-trader (agent-cli) installed.
   Hyperliquid perp positions. Direct HL API — no mcporter needed.
 metadata:
   author: Nunchi Trade
   version: "1.0.0"
-  platform: yex-trader
+  platform: tradexyz-trader
   exchange: hyperliquid
   category: risk-management
 ---

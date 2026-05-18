@@ -2,7 +2,7 @@
 
 Captures funding rate dislocations between HL and external venues.
 When HL funding diverges from the cross-venue median, biases quotes
-to collect the premium. Especially valuable for YEX yield perps
+to collect the premium. Especially valuable for tradexyz yield perps
 where funding IS the product.
 """
 from __future__ import annotations

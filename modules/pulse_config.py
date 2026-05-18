@@ -88,7 +88,7 @@ PULSE_PRESETS: Dict[str, PulseConfig] = {
         volume_surge_ratio=2.0,
         volume_min_24h=200_000.0,
     ),
-    # Tuned for 3-market yex testnet competition. v2 (2026-04-09): tighter
+    # Tuned for 3-market tradexyz testnet competition. v2 (2026-04-09): tighter
     # signal thresholds than v1 — the v1 settings generated noise-driven
     # signals that bled the cohort. Not safe for mainnet trading.
     "competition": PulseConfig(

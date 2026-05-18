@@ -349,7 +349,7 @@ class TestResolvePrivateKey:
                 resolve_private_key()
 
     def test_resolver_uses_venue_env_var(self):
-        """resolve_private_key(venue='yex') should check YEX_PRIVATE_KEY."""
+        """resolve_private_key(venue='tradexyz') should check TRADEXYZ_PRIVATE_KEY."""
         from common.credentials import (
             resolve_private_key,
             MacOSKeychainBackend,
@@ -364,8 +364,8 @@ class TestResolvePrivateKey:
              patch.object(RailwayEnvBackend, "available", return_value=False), \
              patch.object(FlatFileBackend, "available", return_value=True), \
              patch.object(FlatFileBackend, "get_key", return_value=None), \
-             patch.dict(os.environ, {"YEX_PRIVATE_KEY": "0xyexkey"}, clear=True):
-            result = resolve_private_key(venue="yex")
+             patch.dict(os.environ, {"TRADEXYZ_PRIVATE_KEY": "0xyexkey"}, clear=True):
+            result = resolve_private_key(venue="tradexyz")
             assert result == "0xyexkey"
 
     def test_resolver_priority_order(self):

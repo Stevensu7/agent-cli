@@ -98,10 +98,10 @@ def run_cmd(
     if model:
         params["model"] = model
 
-    # Set up anomaly protection for YEX markets
+    # Set up anomaly protection for tradexyz markets
     anomaly_thread = None
-    is_yex = cfg.instrument.startswith("yex:") or cfg.instrument.endswith("-USDYP")
-    protection_enabled = is_yex and cfg.protection.get("enabled", is_yex)
+    is_tradexyz = cfg.instrument.startswith("tradexyz:") or cfg.instrument.endswith("-USDYP")
+    protection_enabled = is_tradexyz and cfg.protection.get("enabled", is_tradexyz)
 
     markout_tracker = None
 
@@ -125,7 +125,7 @@ def run_cmd(
                 # Derive pair name from instrument
                 pair = cfg.instrument
                 if pair.endswith("-USDYP"):
-                    pair = "yex:" + pair.replace("-USDYP", "")
+                    pair = "tradexyz:" + pair.replace("-USDYP", "")
                 prot_config = ProtectionConfig(pair=pair)
                 # Apply any inline config overrides
                 if "sensitivity_multiplier" in cfg.protection:

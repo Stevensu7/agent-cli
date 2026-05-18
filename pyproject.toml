@@ -3,7 +3,7 @@ requires = ["setuptools>=68.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "yex-trader"
+name = "tradexyz-trader"
 version = "0.1.0"
 description = "Autonomous Hyperliquid trading CLI — deterministic and LLM-powered strategies for HL perps and YEX markets"
 readme = "README.md"
@@ -12,7 +12,7 @@ requires-python = ">=3.10"
 authors = [
     { name = "Nunchi Trade", email = "dev@nunchi.trade" },
 ]
-keywords = ["hyperliquid", "trading", "market-making", "defi", "yex", "llm"]
+keywords = ["hyperliquid", "trading", "market-making", "defi", "tradexyz", "llm"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",

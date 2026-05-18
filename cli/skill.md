@@ -1,5 +1,5 @@
 ---
-name: yex-trader
+name: tradexyz-trader
 description: Autonomous Hyperliquid trading — 14 strategies (MM, momentum, arbitrage, LLM) with APEX multi-slot orchestrator, REFLECT performance review, DSL trailing stops, and builder fee revenue collection.
 user-invocable: true
 argument-hint: "<strategy> [options]"
@@ -15,7 +15,7 @@ metadata:
     primaryEnv: HL_PRIVATE_KEY
 ---
 
-# YEX Trader
+# tradexyz Trader
 
 Autonomous Hyperliquid trading via agent-cli. 14 strategies across market making, momentum, arbitrage, and LLM-powered trading. APEX multi-slot orchestrator. REFLECT nightly performance review. Builder fee revenue collection.
 
@@ -40,7 +40,7 @@ cd ~/agent-cli && pip install -e .
 hl setup check  # Validate environment
 ```
 
-### Getting Started — YEX Testnet
+### Getting Started — tradexyz Testnet
 
 1. Set your private key (or use `hl wallet auto`):
 ```bash
@@ -48,7 +48,7 @@ export HL_PRIVATE_KEY=0x...
 export HL_TESTNET=true  # default
 ```
 
-2. Claim testnet USDyP (required for YEX markets):
+2. Claim testnet USDyP (required for tradexyz markets):
 ```bash
 hl setup claim-usdyp
 ```
@@ -60,7 +60,7 @@ hl builder approve
 
 4. Start trading:
 ```bash
-hl run avellaneda_mm -i VXX-USDYP --tick 15          # YEX yield market
+hl run avellaneda_mm -i VXX-USDYP --tick 15          # tradexyz yield market
 hl run engine_mm -i ETH-PERP --tick 10                # Standard perp
 hl apex run --mock --max-ticks 5                       # APEX multi-slot
 ```
@@ -210,7 +210,7 @@ Tools: `strategies`, `builder_status`, `wallet_list`, `wallet_auto`, `setup_chec
 ## Instruments
 
 - **Standard perps**: ETH-PERP, BTC-PERP, SOL-PERP, etc.
-- **YEX yield markets**: VXX-USDYP (yex:VXX), US3M-USDYP (yex:US3M)
+- **tradexyz yield markets**: VXX-USDYP (tradexyz:VXX), US3M-USDYP (tradexyz:US3M)
 
 ## Workflow
 

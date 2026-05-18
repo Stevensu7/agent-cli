@@ -23,7 +23,7 @@ TIMEOUT_S = 5
 def _get_version() -> str:
     try:
         from importlib.metadata import version
-        return version("yex-trader")
+        return version("tradexyz-trader")
     except Exception:
         pass
     try:

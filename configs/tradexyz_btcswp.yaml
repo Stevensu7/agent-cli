@@ -1,0 +1,6 @@
+strategy: engine_mm
+instrument: BTCSWP-USDYP
+market: tradexyz:BTCSWP
+base_size: 0.01
+num_levels: 3
+tick: 10

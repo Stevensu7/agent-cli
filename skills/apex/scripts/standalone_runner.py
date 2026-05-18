@@ -463,11 +463,11 @@ class ApexRunner:
 
         Without this, pulse_engine and radar_engine scan the full HL universe
         (~210 assets) and only filter at the signal-emit step. The agents in
-        the yex testnet competition were producing 0 signals because BTCSWP-
+        the tradexyz testnet competition were producing 0 signals because BTCSWP-
         USDYP never made it through the radar's `top_n_deep` selection — too
         many high-volume HL perps competed for the slot. Pre-filtering here
-        focuses both engines on the 3-asset yex universe so radar/pulse score
-        every yex asset on every tick instead of dropping them silently.
+        focuses both engines on the 3-asset tradexyz universe so radar/pulse score
+        every tradexyz asset on every tick instead of dropping them silently.
 
         Safe-guarded: returns the input unchanged when allowed_instruments is
         empty (e.g. mainnet runs that scan the full universe).
@@ -738,7 +738,7 @@ class ApexRunner:
             all_markets = self.hl.get_all_markets()
             all_markets = self._merge_hip3_markets(all_markets)
             # v3: focus pulse on the explicitly-allowed instruments. Without
-            # this, pulse scans the full HL universe and the few yex assets
+            # this, pulse scans the full HL universe and the few tradexyz assets
             # we actually trade get drowned out by 207 standard perps.
             all_markets = self._filter_to_allowed(all_markets)
 
@@ -1022,7 +1022,7 @@ class ApexRunner:
             #   directional sources -> IOC (taker, immediate fill)
             #   pulse/radar         -> ALO (maker, post-only)
             # This silently broke the testnet competition because ALO orders
-            # on the 3 yex markets almost never cross the spread — they sit
+            # on the 3 tradexyz markets almost never cross the spread — they sit
             # resting at the mid for one tick, get cancelled by the runner,
             # and the agent reports "Entry fill failed" forever. Switching
             # to IOC across the board for low-liquidity / competition mode

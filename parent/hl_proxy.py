@@ -331,7 +331,7 @@ class HLProxy:
 
     @staticmethod
     def _hl_coin(instrument: str) -> str:
-        """Convert internal instrument name to HL coin name (ETH-PERP → ETH, VXX-USDYP → yex:VXX)."""
+        """Convert internal instrument name to HL coin name (ETH-PERP → ETH, VXX-USDYP → tradexyz:VXX)."""
         return instrument_to_coin(instrument)
 
     def get_snapshot(self, instrument: str = "ETH-PERP") -> MarketSnapshot:

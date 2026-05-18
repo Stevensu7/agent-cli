@@ -14,12 +14,12 @@ def strategies_cmd():
         sys.path.insert(0, project_root)
 
     from cli.display import strategy_table
-    from cli.strategy_registry import STRATEGY_REGISTRY, YEX_MARKETS
+    from cli.strategy_registry import STRATEGY_REGISTRY, TRADEXYZ_MARKETS
 
     typer.echo(strategy_table(STRATEGY_REGISTRY))
     typer.echo("")
-    typer.echo("\033[1mYEX Markets (Nunchi HIP-3)\033[0m")
+    typer.echo("\033[1mTRADEXYZ Markets (Nunchi HIP-3)\033[0m")
     typer.echo(f"{'Name':<20} {'HL Coin':<15} {'Description'}")
     typer.echo(f"{'-'*20} {'-'*15} {'-'*40}")
-    for name, info in sorted(YEX_MARKETS.items()):
+    for name, info in sorted(TRADEXYZ_MARKETS.items()):
         typer.echo(f"\033[36m{name:<20}\033[0m {info['hl_coin']:<15} {info['description']}")

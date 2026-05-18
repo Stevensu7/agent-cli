@@ -3,7 +3,7 @@
 Adds place_order(), cancel_order(), get_open_orders() on top of the existing
 HLProxy / MockHLProxy from parent/hl_proxy.py.
 
-Also handles YEX (Nunchi HIP-3) market symbol mapping.
+Also handles tradexyz (Nunchi HIP-3) market symbol mapping.
 """
 from __future__ import annotations
 
@@ -22,7 +22,7 @@ from parent.hl_proxy import HLFill, HLProxy, MockHLProxy
 log = logging.getLogger("hl_adapter")
 
 # --- Constants ---
-SLIPPAGE_FACTOR = 1.002       # IOC slippage multiplier to cross the spread (v3: 50bps→20bps; tighter to reduce entry cost on thin yex markets)
+SLIPPAGE_FACTOR = 1.002       # IOC slippage multiplier to cross the spread (v3: 50bps→20bps; tighter to reduce entry cost on thin tradexyz markets)
 SIG_FIGS = 5                  # HL uses 5 significant figures for prices
 CIRCUIT_BREAKER_THRESHOLD = 5  # consecutive API failures before circuit opens
 MAX_RATE_LIMIT_RETRIES = 3
@@ -30,9 +30,9 @@ BACKOFF_BASE_S = 2.0
 BACKOFF_MAX_S = 8.0
 
 # Shared file-system cache for HIP-3 dex data. Without this, every agent in
-# the fleet hits HL's /info endpoint independently every tick to fetch yex
+# the fleet hits HL's /info endpoint independently every tick to fetch tradexyz
 # markets/mids, and CloudFront 429s the bursts. With 14 agents on a 60s tick
-# that's 28+ yex requests/minute from one IP — well over the limit. The
+# that's 28+ tradexyz requests/minute from one IP — well over the limit. The
 # cache lives in /tmp (or DEX_CACHE_DIR) and is keyed by (kind, dex). TTL
 # is intentionally short so live data stays fresh; the win is that within
 # any TTL window, only one agent actually hits HL.
@@ -115,8 +115,8 @@ def _to_hl_coin(instrument: str) -> str:
     """Map instrument name to HL coin for API calls.
 
     Standard perps:  ETH-PERP -> ETH
-    YEX markets:     VXX-USDYP -> yex:VXX
-                     US3M-USDYP -> yex:US3M
+    tradexyz markets: VXX-USDYP -> tradexyz:VXX
+                     US3M-USDYP -> tradexyz:US3M
     """
     return instrument_to_coin(instrument)
 
@@ -150,7 +150,7 @@ class DirectHLProxy:
         return self._hl._address
 
     def get_snapshot(self, instrument: str = "ETH-PERP"):
-        """Delegate to underlying proxy, handling YEX coin mapping.
+        """Delegate to underlying proxy, handling tradexyz coin mapping.
 
         Tracks consecutive API failures and raises APICircuitBreakerOpen
         after CIRCUIT_BREAKER_THRESHOLD consecutive failures to force
@@ -240,16 +240,16 @@ class DirectHLProxy:
             log.error("Failed to get account state: %s", e)
             return {}
 
-        # Merge HIP-3 DEX state (e.g. YEX). Two things to merge:
+        # Merge HIP-3 DEX state (e.g. tradexyz). Two things to merge:
         #   1. Asset positions (so watchdog/reconciliation can see open trades)
         #   2. accountValue / margin / withdrawable (so preflight, budget
         #      calculations, and any other code reading account_value can see
         #      funds held inside the HIP-3 clearinghouse)
         #
         # Without merging the account value, agents in PR 3 mode (dedicated
-        # agent wallets, funded by treasury into yex) report
+        # agent wallets, funded by treasury into tradexyz) report
         # "** NO FUNDS DETECTED **" at preflight even though they hold
-        # $1000 USDYP in yex, because the universal clearinghouse query
+        # $1000 USDYP in tradexyz, because the universal clearinghouse query
         # returns $0.
         for dex_id in HIP3_DEXS:
             try:
@@ -598,7 +598,7 @@ class DirectHLProxy:
 
         Without the cache, 14+ fleet agents independently hit HL's /info
         endpoint every tick and CloudFront 429s the bursts, which silently
-        breaks pulse/radar's view of the yex universe (see _merge_hip3_markets
+        breaks pulse/radar's view of the tradexyz universe (see _merge_hip3_markets
         in standalone_runner.py). The cache makes the second-through-Nth
         caller within the TTL window read from disk instead of HL.
         """

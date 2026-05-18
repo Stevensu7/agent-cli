@@ -1,0 +1,10 @@
+strategy: avellaneda_mm
+instrument: VXX-USDYP
+market: tradexyz:VXX
+base_size: 0.01
+gamma: 0.5
+k: 1.5
+tick: 10
+protection:
+  enabled: true
+  max_position_size: 1.0

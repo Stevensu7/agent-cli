@@ -282,10 +282,10 @@ def build_command() -> list[str]:
             cmd += ["--tick", tick]
         # Restrict the agent's pulse/radar scans and entries to a set of
         # markets. Critical for PR-3 dedicated-wallet mode where the agent
-        # is funded on a HIP-3 dex (e.g. yex) and must NOT scan universal
+        # is funded on a HIP-3 dex (e.g. tradexyz) and must NOT scan universal
         # HL perps that it has no collateral on. Without this, agents
         # scan 207+ universal markets and produce zero entries even though
-        # they hold $1000 in their yex clearinghouse.
+        # they hold $1000 in their tradexyz clearinghouse.
         allowed = os.environ.get("ALLOWED_INSTRUMENTS")
         if allowed:
             cmd += ["--markets", allowed]

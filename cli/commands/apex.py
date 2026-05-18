@@ -30,7 +30,7 @@ def apex_run(
         help="Comma-separated list of allowed instruments (e.g. VXX-USDYP,US3M-USDYP). "
              "Restricts pulse/radar scans and entries to only these markets. "
              "Required when running in PR-3 dedicated-wallet mode where the agent "
-             "is funded on a HIP-3 dex (e.g. yex) and should not scan universal HL perps.",
+             "is funded on a HIP-3 dex (e.g. tradexyz) and should not scan universal HL perps.",
     ),
     data_dir: str = typer.Option("data/apex", "--data-dir"),
     strategy_names: Optional[str] = typer.Option(

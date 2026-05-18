@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="https://docs.nunchi.trade"><strong>Docs</strong></a> &nbsp;&bull;&nbsp;
-  <a href="https://yex.nunchi.trade"><strong>App</strong></a> &nbsp;&bull;&nbsp;
+  <a href="https://tradexyz.io"><strong>App</strong></a> &nbsp;&bull;&nbsp;
   <a href="https://research.nunchi.trade"><strong>Research</strong></a> &nbsp;&bull;&nbsp;
   <a href="https://discord.gg/nunchi"><strong>Discord</strong></a> &nbsp;&bull;&nbsp;
   <a href="https://x.com/nunchi"><strong>X</strong></a>
@@ -25,21 +25,21 @@
 </p>
 
 <p align="center">
-  <a href="https://railway.com/new/template?template=https://github.com/Nunchi-trade/agent-cli&envs=HL_PRIVATE_KEY,HL_TESTNET,RUN_MODE,APEX_PRESET&HL_TESTNETDefault=true&RUN_MODEDefault=apex&APEX_PRESETDefault=default">
+  <a href="https://railway.com/new/template?template=https://github.com/Stevensu7/agent-cli&envs=HL_PRIVATE_KEY,HL_TESTNET,RUN_MODE,APEX_PRESET&HL_TESTNETDefault=true&RUN_MODEDefault=apex&APEX_PRESETDefault=default">
     <img src="https://railway.com/button.svg" alt="Deploy on Railway" height="36" />
   </a>
 </p>
 
 ---
 
-Ship market-making, momentum, arbitrage, and LLM-powered strategies on [Hyperliquid](https://hyperliquid.xyz) perps and [YEX](https://yex.nunchi.trade) yield markets. Full autonomous stack: Guard trailing stops, Radar opportunity screening, Pulse momentum detection, APEX orchestrator, REFLECT performance review. Works as a standalone CLI, a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill, an [OpenClaw](https://agentskills.io) AgentSkill, or an MCP server.
+Ship market-making, momentum, arbitrage, and LLM-powered strategies on [Hyperliquid](https://hyperliquid.xyz) perps and [TRADEXYZ](https://tradexyz.io) yield markets. Full autonomous stack: Guard trailing stops, Radar opportunity screening, Pulse momentum detection, APEX orchestrator, REFLECT performance review. Works as a standalone CLI, a [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill, an [OpenClaw](https://agentskills.io) AgentSkill, or an MCP server.
 
 ---
 
 ## Quick Start
 
 ```bash
-git clone https://github.com/Nunchi-trade/agent-cli.git && cd agent-cli
+git clone https://github.com/Stevensu7/agent-cli.git && cd agent-cli
 bash scripts/bootstrap.sh        # Creates venv, installs, validates
 ```
 
@@ -160,27 +160,27 @@ Built on the open [Agent Skills](https://agentskills.io) standard. Each skill is
 Grab the raw URL and go:
 
 ```
-https://raw.githubusercontent.com/Nunchi-trade/agent-cli/main/skills/onboard/SKILL.md
-https://raw.githubusercontent.com/Nunchi-trade/agent-cli/main/skills/apex/SKILL.md
-https://raw.githubusercontent.com/Nunchi-trade/agent-cli/main/skills/radar/SKILL.md
-https://raw.githubusercontent.com/Nunchi-trade/agent-cli/main/skills/pulse/SKILL.md
-https://raw.githubusercontent.com/Nunchi-trade/agent-cli/main/skills/guard/SKILL.md
-https://raw.githubusercontent.com/Nunchi-trade/agent-cli/main/skills/reflect/SKILL.md
+https://raw.githubusercontent.com/Stevensu7/agent-cli/main/skills/onboard/SKILL.md
+https://raw.githubusercontent.com/Stevensu7/agent-cli/main/skills/apex/SKILL.md
+https://raw.githubusercontent.com/Stevensu7/agent-cli/main/skills/radar/SKILL.md
+https://raw.githubusercontent.com/Stevensu7/agent-cli/main/skills/pulse/SKILL.md
+https://raw.githubusercontent.com/Stevensu7/agent-cli/main/skills/guard/SKILL.md
+https://raw.githubusercontent.com/Stevensu7/agent-cli/main/skills/reflect/SKILL.md
 ```
 
 ### Install a skill (OpenClaw / ClawHub)
 
 ```bash
-clawhub install nunchi-trade/yex-trader
+clawhub install Stevensu7/tradexyz-trader
 ```
 
 ### Install a skill (Claude Code)
 
 ```bash
-git clone https://github.com/Nunchi-trade/agent-cli.git ~/agent-cli
+git clone https://github.com/Stevensu7/agent-cli.git ~/agent-cli
 cd ~/agent-cli && pip install -e .
-mkdir -p ~/.claude/skills/yex-trader
-cp ~/agent-cli/cli/skill.md ~/.claude/skills/yex-trader/SKILL.md
+mkdir -p ~/.claude/skills/tradexyz-trader
+cp ~/agent-cli/cli/skill.md ~/.claude/skills/tradexyz-trader/SKILL.md
 ```
 
 ---
@@ -501,7 +501,7 @@ Two deployment options: **headless** (APEX runs strategies directly) or **OpenCl
 
 One-click deploy to run APEX autonomously. No AI model needed — pure deterministic strategy execution.
 
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/new/template?template=https://github.com/Nunchi-trade/agent-cli&envs=HL_PRIVATE_KEY,HL_TESTNET,RUN_MODE,APEX_PRESET&HL_TESTNETDefault=true&RUN_MODEDefault=apex&APEX_PRESETDefault=default)
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/new/template?template=https://github.com/Stevensu7/agent-cli&envs=HL_PRIVATE_KEY,HL_TESTNET,RUN_MODE,APEX_PRESET&HL_TESTNETDefault=true&RUN_MODEDefault=apex&APEX_PRESETDefault=default)
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
@@ -519,7 +519,7 @@ One-click deploy to run APEX autonomously. No AI model needed — pure determini
 
 One-click deploy of a full OpenClaw agent that uses our CLI as the tool backend. Talk to your trading bot via Telegram — it scans markets, enters trades, manages risk, and learns from its mistakes.
 
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/new/template?template=https://github.com/Nunchi-trade/agent-cli/tree/main/deploy/openclaw-railway&envs=HL_PRIVATE_KEY,AI_PROVIDER,AI_API_KEY,TELEGRAM_BOT_TOKEN,TELEGRAM_USERNAME,HL_TESTNET&HL_TESTNETDefault=true)
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/new/template?template=https://github.com/Stevensu7/agent-cli/tree/main/deploy/openclaw-railway&envs=HL_PRIVATE_KEY,AI_PROVIDER,AI_API_KEY,TELEGRAM_BOT_TOKEN,TELEGRAM_USERNAME,HL_TESTNET&HL_TESTNETDefault=true)
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
@@ -549,15 +549,15 @@ Both options persist state via Railway volume at `/data` — APEX state, REFLECT
 
 ---
 
-## YEX Yield Markets
+## TRADEXYZ Yield Markets
 
-[YEX](https://yex.nunchi.trade) (Nunchi HIP-3) yield perpetuals on Hyperliquid:
+[TRADEXYZ](https://tradexyz.io) (Nunchi HIP-3) yield perpetuals on Hyperliquid:
 
 | Instrument | HL Coin | Description |
 |------------|---------|-------------|
-| VXX-USDYP | yex:VXX | Volatility index yield perp |
-| US3M-USDYP | yex:US3M | US 3M Treasury rate yield perp |
-| BTCSWP-USDYP | yex:BTCSWP | BTC interest rate swap yield perp — tracks the BTC-denominated swap curve |
+| VXX-USDYP | tradexyz:VXX | Volatility index yield perp |
+| US3M-USDYP | tradexyz:US3M | US 3M Treasury rate yield perp |
+| BTCSWP-USDYP | tradexyz:BTCSWP | BTC interest rate swap yield perp — tracks the BTC-denominated swap curve |
 
 ```bash
 hl run avellaneda_mm -i VXX-USDYP --tick 15
@@ -576,7 +576,7 @@ cli/           CLI commands and trading engine
   hl_adapter.py  Direct HL API adapter (live + mock)
   builder_fee.py Builder fee config (HL native BuilderInfo)
   keystore.py    Encrypted keystore (geth-compatible)
-  strategy_registry.py  Strategy + YEX market definitions
+  strategy_registry.py  Strategy + TRADEXYZ market definitions
 strategies/    14 trading strategy implementations
 modules/       Pure logic modules (zero I/O)
   apex_engine.py     APEX decision engine
@@ -671,7 +671,7 @@ Inspired by openclaw, senpi, and claude code.
 ## Links
 
 - **Docs** — [docs.nunchi.trade](https://docs.nunchi.trade)
-- **YEX App** — [yex.nunchi.trade](https://yex.nunchi.trade)
+- **TRADEXYZ App** — tradexyz.io
 - **Research** — [research.nunchi.trade](https://research.nunchi.trade)
 - **Discord** — [discord.gg/nunchi](https://discord.gg/nunchi)
 - **X** — [@nunchi](https://x.com/nunchi)

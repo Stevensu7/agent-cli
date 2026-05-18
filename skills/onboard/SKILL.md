@@ -2,17 +2,17 @@
 name: agent-onboarding
 version: 1.0.0
 description: First-time setup — from zero to first trade on Hyperliquid
-author: YEX
+author: tradexyz
 dependencies: []
 ---
 
 # Agent Onboarding
 
-Complete first-time setup for the YEX autonomous trading system on Hyperliquid. Follow every step in order. Do not skip steps. Verify each step before proceeding to the next.
+Complete first-time setup for the tradexyz autonomous trading system on Hyperliquid. Follow every step in order. Do not skip steps. Verify each step before proceeding to the next.
 
 ## Agent Mandate
 
-You are onboarding onto the YEX trading system. Your goal is to reach a state where you can autonomously trade on Hyperliquid (testnet or mainnet). Every step has a verification command — if verification fails, fix the issue before continuing.
+You are onboarding onto the tradexyz trading system. Your goal is to reach a state where you can autonomously trade on Hyperliquid (testnet or mainnet). Every step has a verification command — if verification fails, fix the issue before continuing.
 
 RULES:
 - Follow steps sequentially — each depends on the previous
@@ -269,7 +269,7 @@ Only after completing Steps 1-8 on testnet:
 |--|---------|---------|
 | Currency | USDyP (free, claim via `hl setup claim-usdyp`) | USDC (real money) |
 | Instruments | Same tickers (ETH-PERP, BTC-PERP, etc.) | Same tickers |
-| YEX markets | VXX-USDYP, US3M-USDYP, BTCSWP-USDYP | Same instruments |
+| tradexyz markets | VXX-USDYP, US3M-USDYP, BTCSWP-USDYP | Same instruments |
 | Builder fee | Must approve separately | Must approve separately |
 | `--mainnet` flag | Not needed (default is testnet) | Required on all commands |
 | Risk | None (play money) | Real financial risk |

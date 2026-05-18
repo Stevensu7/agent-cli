@@ -25,11 +25,11 @@
 - **Where:** `cli/hl_adapter.py` lines 469-507 (`place_trigger_order`, `cancel_trigger_order`).
 - **Why it matters:** Enables exchange-side risk management. Without it, stop losses must be software-side (client must be running).
 
-### F4: YEX Market Mapping
+### F4: tradexyz Market Mapping
 
-- **What:** Nunchi HIP-3 yield perpetuals use a `yex:` prefixed coin namespace on HL (e.g., `VXX-USDYP` -> `yex:VXX`). The `_to_hl_coin()` function handles bidirectional mapping. Three YEX markets defined: `VXX-USDYP`, `US3M-USDYP`, `BTCSWP-USDYP`.
-- **Where:** `cli/hl_adapter.py` lines 43-53 (`_to_hl_coin`), `cli/strategy_registry.py` lines 100-113 (`YEX_MARKETS`), `cli/hl_adapter.py` lines 121-144 (`_get_yex_snapshot`).
-- **Why it matters:** YEX markets are HL-exclusive products. No other exchange has these instruments.
+- **What:** Nunchi HIP-3 yield perpetuals use a `tradexyz:` prefixed coin namespace on HL (e.g., `VXX-USDYP` -> `tradexyz:VXX`). The `_to_hl_coin()` function handles bidirectional mapping. Three tradexyz markets defined: `VXX-USDYP`, `US3M-USDYP`, `BTCSWP-USDYP`.
+- **Where:** `cli/hl_adapter.py` lines 43-53 (`_to_hl_coin`), `cli/strategy_registry.py` lines 100-113 (`tradexyz_MARKETS`), `cli/hl_adapter.py` lines 121-144 (`_get_yex_snapshot`).
+- **Why it matters:** tradexyz markets are HL-exclusive products. No other exchange has these instruments.
 
 ### F5: Price Rounding (5 Significant Figures)
 
@@ -83,7 +83,7 @@
 
 ## 2. Strategy x Feature Matrix
 
-| Strategy | F1: ALO | F2: Builder Fee | F3: Trigger | F4: YEX Map | F5: Price Round | F6: szDecimals | F7: L2 Format | F8: Funding Format | F9: HL Funding Rate | F10: Meta API | F11: Candle Format |
+| Strategy | F1: ALO | F2: Builder Fee | F3: Trigger | F4: tradexyz Map | F5: Price Round | F6: szDecimals | F7: L2 Format | F8: Funding Format | F9: HL Funding Rate | F10: Meta API | F11: Candle Format |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | **simple_mm** | - | I | - | I | I | I | I | - | - | - | - |
 | **avellaneda_mm** | - | I | - | I | I | I | I | - | - | - | - |
@@ -111,7 +111,7 @@
 
 **Notes on the matrix:**
 - F1 (ALO), F3 (Trigger), F10 (Meta API), F11 (Candle Format) are adapter-level features not directly used by any strategy's `on_tick()`. They are available to the execution layer.
-- F2 (Builder Fee), F4 (YEX Map), F5 (Price Round), F6 (szDecimals), F7 (L2 Format) affect **all 17 strategies** implicitly because every order flows through `DirectHLProxy.place_order()` and every snapshot flows through `get_snapshot()`.
+- F2 (Builder Fee), F4 (tradexyz Map), F5 (Price Round), F6 (szDecimals), F7 (L2 Format) affect **all 17 strategies** implicitly because every order flows through `DirectHLProxy.place_order()` and every snapshot flows through `get_snapshot()`.
 - F8 (Funding Format) is consumed directly by 6 strategies that read `snapshot.funding_rate` for trading logic: `engine_mm`, `funding_arb`, `regime_mm`, `liquidation_mm`, `basis_arb`, `funding_momentum`.
 - F9 (HyperliquidFundingRate) is a hard import in 4 quoting-engine strategies: `engine_mm`, `funding_arb`, `regime_mm`, `liquidation_mm`.
 
@@ -124,7 +124,7 @@
 | **F1: ALO Orders** | **Degraded** | System works without it (falls back to GTC/IOC), but loses maker rebates. MM strategies become significantly less profitable paying taker fees on every order. |
 | **F2: Builder Fee** | **Required** | Revenue stops completely without it. No builder fee = no Nunchi income. This is the business model. |
 | **F3: Trigger Orders** | **Optional** | Convenience feature for server-side stop losses. Software-side stops work as a fallback (already the case for most strategies). |
-| **F4: YEX Market Mapping** | **Required** (for YEX markets) | YEX instruments are HL-exclusive. Without mapping, these 3 markets are untradeable. For standard perps, this feature is unused. |
+| **F4: tradexyz Market Mapping** | **Required** (for tradexyz markets) | tradexyz instruments are HL-exclusive. Without mapping, these 3 markets are untradeable. For standard perps, this feature is unused. |
 | **F5: Price Rounding** | **Required** | Orders rejected without correct tick-size rounding. Every exchange has equivalent logic but with different rules. |
 | **F6: szDecimals** | **Required** | Orders rejected without correct size precision. Same as F5 -- required but exchange-specific. |
 | **F7: L2 Orderbook Format** | **Required** | No market data without correct parsing. All snapshot data depends on this. |
@@ -143,7 +143,7 @@
 | **F1: ALO Orders** | **Easy** | Low | Already behind `place_order()` interface. Map to equivalent post-only on other exchanges (Binance: `timeInForce=GTX`, Bybit: `PostOnly`). |
 | **F2: Builder Fee** | **Medium** | Medium | Conceptually HL-only (no other exchange has builder fees). For multi-exchange, this becomes a no-op on non-HL venues. Need to separate "Nunchi revenue fee" from "exchange-native builder fee". |
 | **F3: Trigger Orders** | **Easy** | Low | Already behind `place_trigger_order()` interface. Most exchanges support conditional/trigger orders with similar semantics. |
-| **F4: YEX Market Mapping** | **Hard** | High | Deeply coupled to HL's `yex:` namespace. YEX markets don't exist on other exchanges. For multi-exchange support, this is an HL-only code path that needs to be isolated. |
+| **F4: tradexyz Market Mapping** | **Hard** | High | Deeply coupled to HL's `tradexyz:` namespace. tradexyz markets don't exist on other exchanges. For multi-exchange support, this is an HL-only code path that needs to be isolated. |
 | **F5: Price Rounding** | **Medium** | Medium | The concept (tick-size rounding) is universal, but the rule (5 sig-figs) is HL-specific. Need an exchange-agnostic `TickSizeProvider` interface. Each exchange adapter provides its own implementation. Currently computed inline in `_get_price_tick`. |
 | **F6: szDecimals** | **Medium** | Medium | Same pattern as F5. Need a `SizePrecisionProvider` that each exchange adapter implements. Currently fetched from HL meta API and cached. |
 | **F7: L2 Orderbook Format** | **Medium** | Medium | `MarketSnapshot` is already exchange-agnostic. The parsing in `get_snapshot()` is the only HL-specific part. A new exchange adapter just needs to produce the same `MarketSnapshot` from its own L2 format. |

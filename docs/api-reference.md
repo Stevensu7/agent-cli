@@ -186,7 +186,7 @@ curl $AGENT_URL/api/status
 
 ### `GET /api/strategies`
 
-Returns the full catalog of available trading strategies and YEX markets.
+Returns the full catalog of available trading strategies and tradexyz markets.
 
 ```bash
 curl $AGENT_URL/api/strategies
@@ -634,7 +634,7 @@ Tool: strategies
 Args: (none)
 ```
 
-Returns JSON with strategy catalog and YEX markets. Same data as `GET /api/strategies`.
+Returns JSON with strategy catalog and tradexyz markets. Same data as `GET /api/strategies`.
 
 #### `builder_status()`
 

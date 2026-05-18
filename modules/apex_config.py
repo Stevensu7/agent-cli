@@ -105,7 +105,7 @@ class ApexConfig:
     strategy_confidence_threshold: float = 50.0
 
     # Signal direction flip — when True, invert all entry directions
-    # (long→short, short→long).  On thin markets like YEX BTCSWP, pulse
+    # (long→short, short→long).  On thin markets like tradexyz BTCSWP, pulse
     # signals (FUNDING_FLIP, VOLUME_SURGE, OI_DELTA) fire at move *exhaustion*,
     # not initiation.  Flipping direction converts a 0% win-rate signal set
     # into a mean-reversion strategy.
@@ -164,7 +164,7 @@ APEX_PRESETS: Dict[str, ApexConfig] = {
         pulse_confidence_threshold=60.0,
         daily_loss_limit=1000.0,
     ),
-    # Tuned for testnet competitions on the yex HIP-3 dex with 3 markets
+    # Tuned for testnet competitions on the tradexyz HIP-3 dex with 3 markets
     # (VXX, US3M, BTCSWP). Pair with --markets VXX-USDYP,US3M-USDYP,BTCSWP-USDYP.
     #
     # Tuning history:
@@ -172,7 +172,7 @@ APEX_PRESETS: Dict[str, ApexConfig] = {
     #     daily_loss=2000. Demonstrated agents trade but every cohort agent
     #     bled $100-$440 in the first hour because the high leverage + low
     #     entry threshold + 10-min churn was a losing combination on the
-    #     low-liquidity yex markets.
+    #     low-liquidity tradexyz markets.
     #
     #   v2 (2026-04-09): drop leverage to 5x, raise entry thresholds, longer
     #     min hold, much tighter daily loss limit so losing agents pause
@@ -193,10 +193,10 @@ APEX_PRESETS: Dict[str, ApexConfig] = {
         leverage=3.0,                     # v3: 5.0 → 3.0 (more headroom per stop)
         max_negative_roe=-10.0,           # v3: -5.0 → -10.0 (~3.3% price at 3x lev)
         flip_signal_direction=False,       # v5: reverted — signals are noise, not inverted
-        # v6: Pulse/radar have no directional edge on YEX (100+ trades, 0% WR).
+        # v6: Pulse/radar have no directional edge on tradexyz (100+ trades, 0% WR).
         # Strategy system takes over: per-agent strategies via STRATEGY_NAMES env.
         radar_score_threshold=9999,       # disabled — no edge
-        pulse_confidence_threshold=95.0,  # disabled — pulse has no edge on YEX
+        pulse_confidence_threshold=95.0,  # disabled — pulse has no edge on tradexyz
         strategy_confidence_threshold=50.0,  # strategies have their own threshold
         strategy_enabled=True,            # v6: enable strategy system
         strategy_interval_ticks=3,        # v6.6: scan every 3 min — 429 retry makes this safe
@@ -207,7 +207,7 @@ APEX_PRESETS: Dict[str, ApexConfig] = {
         daily_loss_limit=200.0,           # v2: was 2000 — pause losing agents fast
         # Force IOC orders so entries cross the spread and fill immediately.
         # The default ALO posts limit orders that almost never fill on the
-        # low-liquidity yex markets and the runner cancels them after one
+        # low-liquidity tradexyz markets and the runner cancels them after one
         # tick. IOC trades the maker rebate for guaranteed fills.
         entry_order_type="Ioc",
     ),

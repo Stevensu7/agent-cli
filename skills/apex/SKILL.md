@@ -2,7 +2,7 @@
 name: apex-strategy
 version: 1.0.0
 description: Autonomous multi-slot trading orchestrator
-author: YEX
+author: tradexyz
 dependencies:
   - modules/apex_config.py
   - modules/apex_state.py

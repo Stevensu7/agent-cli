@@ -96,18 +96,18 @@ STRATEGY_REGISTRY: Dict[str, Dict[str, Any]] = {
     },
 }
 
-# YEX market definitions — Nunchi HIP-3 yield perpetuals
-YEX_MARKETS: Dict[str, Dict[str, str]] = {
+# TRADEXYZ market definitions — Nunchi HIP-3 yield perpetuals
+TRADEXYZ_MARKETS: Dict[str, Dict[str, str]] = {
     "VXX-USDYP": {
-        "hl_coin": "yex:VXX",
+        "hl_coin": "tradexyz:VXX",
         "description": "Volatility index (VXX) yield perpetual",
     },
     "US3M-USDYP": {
-        "hl_coin": "yex:US3M",
+        "hl_coin": "tradexyz:US3M",
         "description": "US 3-month Treasury rate yield perpetual",
     },
     "BTCSWP-USDYP": {
-        "hl_coin": "yex:BTCSWP",
+        "hl_coin": "tradexyz:BTCSWP",
         "description": "BTC interest rate swap yield perpetual — tracks the BTC-denominated swap curve",
     },
 }
@@ -133,12 +133,12 @@ def resolve_instrument(name: str) -> str:
 
     Handles:
       - Standard perps: 'ETH-PERP' -> 'ETH-PERP' (unchanged, HLProxy maps internally)
-      - YEX markets: 'VXX-USDYP' -> 'VXX-USDYP' (DirectHLProxy maps to yex:VXX)
-      - Direct HL coins: 'yex:VXX' -> 'VXX-USDYP' (reverse lookup)
+      - tradexyz markets: 'VXX-USDYP' -> 'VXX-USDYP' (DirectHLProxy maps to tradexyz:VXX)
+      - Direct HL coins: 'tradexyz:VXX' -> 'VXX-USDYP' (reverse lookup)
     """
-    # Direct YEX coin reference -> canonical name
-    for name_key, info in YEX_MARKETS.items():
+    # Direct tradexyz coin reference -> canonical name
+    for name_key, info in TRADEXYZ_MARKETS.items():
         if name.lower() == info["hl_coin"].lower():
             return name_key
-    # Already a known YEX market or standard perp
+    # Already a known tradexyz market or standard perp
     return name

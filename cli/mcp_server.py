@@ -25,7 +25,7 @@ def create_mcp_server():
     """Create and configure the FastMCP server."""
     from mcp.server.fastmcp import FastMCP
 
-    mcp = FastMCP("yex-trader", instructions="Autonomous Hyperliquid trading CLI — 14 strategies, APEX orchestrator, REFLECT reviews.")
+    mcp = FastMCP("tradexyz-trader", instructions="Autonomous Hyperliquid trading CLI — 14 strategies, APEX orchestrator, REFLECT reviews.")
 
     # ------------------------------------------------------------------
     # Fast tools — call Python directly (no subprocess overhead)
@@ -34,17 +34,17 @@ def create_mcp_server():
     @mcp.tool()
     def strategies() -> str:
         """List all available trading strategies with descriptions and default parameters."""
-        from cli.strategy_registry import STRATEGY_REGISTRY, YEX_MARKETS
+        from cli.strategy_registry import STRATEGY_REGISTRY, TRADEXYZ_MARKETS
 
-        result = {"strategies": {}, "yex_markets": {}}
+        result = {"strategies": {}, "tradexyz_markets": {}}
         for name, info in STRATEGY_REGISTRY.items():
             result["strategies"][name] = {
                 "description": info.get("description", ""),
                 "type": info.get("type", ""),
                 "params": {k: v for k, v in info.get("params", {}).items()},
             }
-        for name, info in YEX_MARKETS.items():
-            result["yex_markets"][name] = {
+        for name, info in TRADEXYZ_MARKETS.items():
+            result["tradexyz_markets"][name] = {
                 "hl_coin": info.get("hl_coin", ""),
                 "description": info.get("description", ""),
             }

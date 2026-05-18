@@ -3,7 +3,7 @@ import pytest
 
 from cli.strategy_registry import (
     STRATEGY_REGISTRY,
-    YEX_MARKETS,
+    TRADEXYZ_MARKETS,
     resolve_strategy_path,
     resolve_instrument,
 )
@@ -46,12 +46,12 @@ class TestResolveInstrument:
         assert resolve_instrument("ETH-PERP") == "ETH-PERP"
         assert resolve_instrument("BTC-PERP") == "BTC-PERP"
 
-    def test_yex_name_unchanged(self):
+    def test_tradexyz_name_unchanged(self):
         assert resolve_instrument("VXX-USDYP") == "VXX-USDYP"
 
-    def test_yex_coin_reverse_lookup(self):
-        assert resolve_instrument("yex:VXX") == "VXX-USDYP"
-        assert resolve_instrument("yex:US3M") == "US3M-USDYP"
+    def test_tradexyz_coin_reverse_lookup(self):
+        assert resolve_instrument("tradexyz:VXX") == "VXX-USDYP"
+        assert resolve_instrument("tradexyz:US3M") == "US3M-USDYP"
 
     def test_unknown_instrument_passthrough(self):
         assert resolve_instrument("UNKNOWN-PERP") == "UNKNOWN-PERP"

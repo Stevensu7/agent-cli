@@ -265,7 +265,7 @@ def read_strategies() -> Dict[str, Any]:
     if project_root not in sys.path:
         sys.path.insert(0, project_root)
 
-    from cli.strategy_registry import STRATEGY_REGISTRY, YEX_MARKETS
+    from cli.strategy_registry import STRATEGY_REGISTRY, TRADEXYZ_MARKETS
 
     strategies = {}
     for name, info in STRATEGY_REGISTRY.items():
@@ -278,7 +278,7 @@ def read_strategies() -> Dict[str, Any]:
         "strategies": strategies,
         "markets": {
             name: info["description"]
-            for name, info in YEX_MARKETS.items()
+            for name, info in TRADEXYZ_MARKETS.items()
         },
     }
 
