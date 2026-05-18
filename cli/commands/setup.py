@@ -135,17 +135,8 @@ def setup_bootstrap():
 
 @setup_app.command("claim-usdyp")
 def setup_claim_usdyp():
-    """Claim testnet USDyP tokens (required for tradexyz markets)."""
-    import json
-    import urllib.request
-
-    project_root = str(Path(__file__).resolve().parent.parent.parent)
-    if project_root not in sys.path:
-        sys.path.insert(0, project_root)
-
-    # Derive address from private key
+    """Get testnet USDyP from Hyperliquid testnet faucet (no Nunchi API)."""
     from cli.config import TradingConfig
-
     cfg = TradingConfig()
     try:
         key = cfg.get_private_key()
@@ -158,38 +149,11 @@ def setup_claim_usdyp():
     acct = Account.from_key(key)
     address = acct.address
 
-    typer.echo(f"Claiming USDyP for {address} ...")
-
-    url = "https://api-temp.nunchi.trade/api/v1/tradexyz/usdyp-claim"
-    payload = json.dumps({"userAddress": address}).encode()
-    req = urllib.request.Request(
-        url,
-        data=payload,
-        headers={
-            "Content-Type": "application/json",
-            "x-network": "testnet",
-        },
-        method="POST",
-    )
-
-    try:
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            body = resp.read().decode()
-            typer.echo(f"OK  Claim response: {body}")
-    except urllib.error.HTTPError as e:
-        body = e.read().decode() if e.fp else ""
-        typer.echo(f"ERROR: HTTP {e.code}: {body}", err=True)
-        if "not eligible" in body.lower() or "verify" in body.lower():
-            typer.echo("")
-            typer.echo("This wallet hasn't been seen by Hyperliquid yet.")
-            typer.echo("")
-            typer.echo("  One-time fix (takes 30 seconds):")
-            typer.echo("  1. Visit https://app.hyperliquid-testnet.xyz")
-            typer.echo("  2. Connect wallet: " + address)
-            typer.echo("  3. Re-run: hl setup claim-usdyp")
-            typer.echo("")
-            typer.echo("This is a Hyperliquid requirement for fresh wallets — only needed once.")
-        raise typer.Exit(1)
-    except Exception as e:
-        typer.echo(f"ERROR: {e}", err=True)
-        raise typer.Exit(1)
+    typer.echo(f"Your wallet: {address}")
+    typer.echo("")
+    typer.echo("Claim testnet USDyP directly from Hyperliquid:")
+    typer.echo(f"  1. Visit https://app.hyperliquid-testnet.xyz")
+    typer.echo(f"  2. Connect wallet: {address}")
+    typer.echo("  3. Click 'Faucet' to claim testnet funds")
+    typer.echo("")
+    typer.echo("This uses Hyperliquid's public testnet faucet — no external API needed.")
